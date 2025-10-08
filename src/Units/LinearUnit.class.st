@@ -12,13 +12,15 @@ Class {
 	#package : 'Units'
 }
 
-{ #category : 'converting' }
-LinearUnit >> convertTo: to value: aValue [
-	"Convert a value to another unit"
+{ #category : 'generate' }
+LinearUnit class >> base: dimension [
+	"Creates a base unit."
 
-	| |
-	dimension = to dimension ifFalse: [IncompatibleDimensionsError new signal].
-	^ aValue * magnitude / to magnitude.
+	| dimarray |
+	dimarray := Array new: 9.
+	1 to: 9 do: [ :x | dimarray at: x put: 0 ].
+	dimarray at: dimension put: 1.
+	^ self new dimension: dimarray; magnitude: 1.0.
 ]
 
 { #category : 'accessing' }
@@ -29,8 +31,8 @@ LinearUnit >> dimension [
 
 { #category : 'accessing' }
 LinearUnit >> dimension: d [
-	"Set the unit's dimension."
-
+	"Sets the unit's dimension."
+	| |
 	dimension := d.
 ]
 
@@ -41,8 +43,18 @@ LinearUnit >> magnitude [
 ]
 
 { #category : 'accessing' }
-LinearUnit >> magnitude: mag [
-	"Set the unit's magnitude."
+LinearUnit >> magnitude: m [
+	"Sets the unit's magnitude."
+	| |
+	magnitude := m.
+]
 
-	magnitude := mag.
+{ #category : 'accessing' }
+LinearUnit >> to: unit [
+	"comment stating purpose of instance-side method"
+	"scope: class-variables  &  instance-variables"
+
+	|  |
+	dimension = unit dimension ifFalse: [IncompatibleDimensionsError new signal].
+	^ magnitude / unit magnitude.
 ]
