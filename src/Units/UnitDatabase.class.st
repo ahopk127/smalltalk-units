@@ -12,6 +12,27 @@ Class {
 	#package : 'Units'
 }
 
+{ #category : 'adding' }
+UnitDatabase >> definePrefix: name as: value [
+	"Add a new prefix to this database."
+
+	self prefixes at: name put: value.
+]
+
+{ #category : 'adding' }
+UnitDatabase >> defineUnit: name as: value [
+	"Add a new unit to this database."
+
+	self units at: name put: value.
+]
+
+{ #category : 'accessing' }
+UnitDatabase >> getPrefix: name [
+	"Get a prefix, or nil if there is none with this name."
+
+	^ prefixes at: name ifAbsent: nil
+]
+
 { #category : 'transforming' }
 UnitDatabase >> getUnit: name [
 	"Gets a unit from a name, which can contain prefixes."
