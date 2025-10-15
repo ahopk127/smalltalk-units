@@ -47,5 +47,5 @@ Number >> of: unit [
 
 	| m2 |
 	m2 := unit magnitude * self.
-	^ LinearUnit new dimension: unit dimension; magnitude: m2.
+	^ (LinearUnit new) dimension: unit dimension; magnitude: m2.
 ]
