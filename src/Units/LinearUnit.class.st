@@ -23,6 +23,13 @@ LinearUnit class >> base: dimension [
 	^ self new dimension: dimarray; magnitude: 1.0.
 ]
 
+{ #category : 'math functions' }
+LinearUnit >> cubed [
+	"Returns the cube of this unit."
+
+	^ self pow: 3.
+]
+
 { #category : 'accessing' }
 LinearUnit >> dimension [
 	"Get the unit's dimension"
@@ -47,6 +54,28 @@ LinearUnit >> magnitude: m [
 	"Sets the unit's magnitude."
 	| |
 	magnitude := m.
+]
+
+{ #category : 'math functions' }
+LinearUnit >> pow: n [
+	"Raises this unit to the power n (must be a number)."
+
+	^ (self class new) dimension: self dimension * n; magnitude: (self magnitude pow: n).
+	
+]
+
+{ #category : 'math functions' }
+LinearUnit >> reciprocal [ 
+	"Returns this unit's reciprocal."
+
+	^ self pow: -1.
+]
+
+{ #category : 'math functions' }
+LinearUnit >> squared [
+	"Returns the square of this unit."
+
+	^ self pow: 2.
 ]
 
 { #category : 'accessing' }
