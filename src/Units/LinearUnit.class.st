@@ -24,6 +24,22 @@ LinearUnit class >> base: dimension [
 ]
 
 { #category : 'math functions' }
+LinearUnit >> * multiplicand [
+	"Multiplies this unit by its argument."
+
+	^ (self class new) dimension: (self dimension + multiplicand dimension);
+	magnitude: (self magnitude * multiplicand magnitude).
+]
+
+{ #category : 'math functions' }
+LinearUnit >> / dividend [
+	"Divides this unit by its argument."
+
+	^ (self class new) dimension: (self dimension - dividend dimension);
+	magnitude: (self magnitude / dividend magnitude).
+]
+
+{ #category : 'math functions' }
 LinearUnit >> cubed [
 	"Returns the cube of this unit."
 
