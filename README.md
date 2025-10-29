@@ -6,5 +6,5 @@ Currently, this is a work in progress without a UI.  However, you can convert un
 ```
 metre := LinearUnit base: 1.
 inch := 0.0254 of: metre.
-(36 of: inch) to: metre.
+36 of: inch to: metre.
 ```

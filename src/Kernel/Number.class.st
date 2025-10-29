@@ -376,6 +376,13 @@ Number >> of: unit [
 	^ (LinearUnit new) dimension: unit dimension; magnitude: m2.
 ]
 
+{ #category : 'instance creation' }
+Number >> of: from to: to [
+	"Shorthand for (self of: from) to: to.  Converts this amount of from to the unit to."
+
+	^ (self of: from) to: to.
+]
+
 { #category : 'testing' }
 Number >> positive [
 	"Answer whether the receiver is positive or equal to 0. (ST-80 protocol).
