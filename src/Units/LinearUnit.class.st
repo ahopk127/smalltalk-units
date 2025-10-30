@@ -23,6 +23,16 @@ LinearUnit class >> base: dimension [
 	^ self new dimension: dimarray; magnitude: 1.0.
 ]
 
+{ #category : 'generate' }
+LinearUnit class >> one [
+	"Returns the LinearUnit with a value of one."
+
+	| dimarray |
+	dimarray := Array new: 9.
+	1 to: 9 do: [ :x | dimarray at: x put: 0 ].
+	^ self new dimension: dimarray; magnitude: 1.0.
+]
+
 { #category : 'math functions' }
 LinearUnit >> * multiplicand [
 	"Multiplies this unit by its argument."
@@ -37,6 +47,13 @@ LinearUnit >> / dividend [
 
 	^ (self class new) dimension: (self dimension - dividend dimension);
 	magnitude: (self magnitude / dividend magnitude).
+]
+
+{ #category : 'arithmetic' }
+LinearUnit >> adaptToNumber: num andSend: op [
+	"Performs an operation with a number."
+
+	^ (num of: self class one) perform: op with: self.
 ]
 
 { #category : 'math functions' }
