@@ -59,7 +59,15 @@ LinearUnit >> / dividend [
 LinearUnit >> adaptToNumber: num andSend: op [
 	"Performs an operation with a number."
 
-	^ (num of: self class one) perform: op with: self.
+	^ num asUnit perform: op with: self.
+]
+
+{ #category : 'converting' }
+LinearUnit >> asUnit [
+	"Returns this unit as a unit."
+	"No-op, but other types support this message, so it's intended to be used on objects of potentially unknown type, to always return a unit."
+
+	^ self.
 ]
 
 { #category : 'math functions' }

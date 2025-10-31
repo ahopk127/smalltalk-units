@@ -241,6 +241,13 @@ Number >> asSmallPositiveDegrees [
 	^self \\ 360
 ]
 
+{ #category : 'converting' }
+Number >> asUnit [
+	"cReturns this number as a unit."
+
+	^ self of: LinearUnit one.
+]
+
 { #category : 'truncation and round off' }
 Number >> ceiling [
        "Answer the integer nearest the receiver toward  infinity."
