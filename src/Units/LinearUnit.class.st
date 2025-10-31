@@ -36,17 +36,23 @@ LinearUnit class >> one [
 { #category : 'math functions' }
 LinearUnit >> * multiplicand [
 	"Multiplies this unit by its argument."
-
-	^ (self class new) dimension: (self dimension + multiplicand dimension);
-	magnitude: (self magnitude * multiplicand magnitude).
+	
+	| newDimension newMagnitude |
+	newDimension := self dimension + multiplicand dimension.
+	newMagnitude := self magnitude * multiplicand magnitude.
+	^ newDimension = self class one dimension ifTrue: newMagnitude ifFalse: 
+	  ((self class new) dimension: newDimension; magnitude: newMagnitude).
 ]
 
 { #category : 'math functions' }
 LinearUnit >> / dividend [
 	"Divides this unit by its argument."
-
-	^ (self class new) dimension: (self dimension - dividend dimension);
-	magnitude: (self magnitude / dividend magnitude).
+	
+	| newDimension newMagnitude |
+	newDimension := self dimension - dividend dimension.
+	newMagnitude := self magnitude / dividend magnitude.
+	^ newDimension = self class one dimension ifTrue: newMagnitude ifFalse: 
+	  ((self class new) dimension: newDimension; magnitude: newMagnitude).
 ]
 
 { #category : 'arithmetic' }
@@ -93,7 +99,7 @@ LinearUnit >> magnitude: m [
 LinearUnit >> pow: n [
 	"Raises this unit to the power n (must be a number)."
 
-	^ (self class new) dimension: self dimension * n; magnitude: (self magnitude pow: n).
+	^ n = 0 ifTrue: 1 ifFalse: ((self class new) dimension: self dimension * n; magnitude: (self magnitude pow: n)).
 	
 ]
 
