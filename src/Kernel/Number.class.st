@@ -296,6 +296,13 @@ Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 "
 ]
 
+{ #category : 'accessing' }
+Number >> dimension [
+	"Returns this number's dimension as if it were a unit (i.e. an array of zeroes)."
+
+	^ LinearUnit one dimension.
+]
+
 { #category : 'mathematical functions' }
 Number >> exp [
 	"Answer the exponential of the receiver as a floating point number."
@@ -357,6 +364,13 @@ Number >> isZero [
 Number >> literalEqual: other [
 
 	^ self class == other class and: [self = other]
+]
+
+{ #category : 'accessing' }
+Number >> magnitude [
+	"Returns this number's magnitude as if it were a unit."
+
+	^ self.
 ]
 
 { #category : 'arithmetic' }
