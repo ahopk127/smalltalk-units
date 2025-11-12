@@ -976,13 +976,6 @@ Float >> negated [
 	^-1.0 * self
 ]
 
-{ #category : 'math functions' }
-Float >> pow: exponent [
-	"Raises self to the power of exponent."
-
-	^ (self ln * exponent) exp.
-]
-
 { #category : 'printing' }
 Float >> printOn: stream base: base [
 	"Handle sign, zero, and NaNs; all other values passed to FloatPrintPolicy"

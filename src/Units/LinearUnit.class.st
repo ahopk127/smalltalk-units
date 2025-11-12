@@ -104,10 +104,11 @@ LinearUnit >> magnitude: m [
 ]
 
 { #category : 'math functions' }
-LinearUnit >> pow: n [
+LinearUnit >> raisedTo: n [
 	"Raises this unit to the power n (must be a number)."
 
-	^ n = 0 ifTrue: 1 ifFalse: ((self class new) dimension: self dimension * n; magnitude: (self magnitude pow: n)).
+	^ (self class new) dimension: self dimension * n;
+	                   magnitude: (self magnitude raisedTo: n).
 	
 ]
 
