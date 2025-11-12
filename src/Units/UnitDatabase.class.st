@@ -13,6 +13,41 @@ Class {
 }
 
 { #category : 'adding' }
+UnitDatabase >> at: name putPrefixExpression: expression [
+	"Adds a prefix from its expression."
+
+	| parsed |
+	parsed := self parsePrefixExpression: expression.
+	self units at: name put: parsed.
+]
+
+{ #category : 'adding' }
+UnitDatabase >> at: name putUnitExpression: expression [
+	"Adds a unit from its expression."
+
+	| parsed |
+	parsed := self parseUnitExpression: expression.
+	self units at: name put: parsed.
+]
+
+{ #category : 'converting' }
+UnitDatabase >> convert: count of: from to: to [
+	"Converts a value from one unit into another.  Does not support expressions."
+
+	^ count of: (self getUnit: from)
+	        to: (self getUnit: to).
+]
+
+{ #category : 'converting' }
+UnitDatabase >> convert: expression to: name [
+	"Converts an expression into another."
+
+	| value |
+	value := self parseUnitExpression: expression.
+	^ value to: (self parseUnitExpression: name).
+]
+
+{ #category : 'adding' }
 UnitDatabase >> definePrefix: name as: value [
 	"Add a new prefix to this database."
 
@@ -34,7 +69,7 @@ UnitDatabase >> getPrefix: name [
 	^ prefixes at: name ifAbsent: nil
 ]
 
-{ #category : 'transforming' }
+{ #category : 'accessing' }
 UnitDatabase >> getUnit: name [
 	"Gets a unit from a name, which can contain prefixes."
 	
@@ -129,6 +164,23 @@ UnitDatabase >> prefixes [
 
 	prefixes ifNil: [ prefixes := Dictionary new ].
 	^ prefixes.
+]
+
+{ #category : 'adding' }
+UnitDatabase >> putBaseUnits [
+	"Puts the default base units into this map."
+
+	self units at: 's' put: (LinearUnit base: 1);
+	           at: 'm' put: (LinearUnit base: 2);
+	           at: 'kg' put: (LinearUnit base: 3);
+	           at: 'g' put: (LinearUnit base: 3) * 1e-3;
+	           at: 'rad' put: (LinearUnit base: 4);
+	           at: 'K' put: (LinearUnit base: 5);
+	           at: 'A' put: (LinearUnit base: 6);
+	           at: 'mol' put: (LinearUnit base: 7);
+	           at: 'cd' put: (LinearUnit base: 8);
+	           at: 'b' put: (LinearUnit base: 9).
+	           
 ]
 
 { #category : 'accessing' }
