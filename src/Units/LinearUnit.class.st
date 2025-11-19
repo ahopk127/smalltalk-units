@@ -63,6 +63,22 @@ LinearUnit >> adaptToNumber: num andSend: op [
 ]
 
 { #category : 'converting' }
+LinearUnit >> asString [
+	"Returns a string representation of this unit."
+
+	| dimnames direxps dimstring |
+	dimnames := #('s' 'm' 'kg' 'rad' 'K' 'A' 'mol' 'cd' 'b').
+	direxps := (1 to: 9) select: [ :i | (self dimension at: i) ~= 0 ].
+	dimstring := ' ' join: (direxps collect: [ :i || exponent |
+		exponent := self dimension at: i.
+		exponent = 1
+			ifTrue: (dimnames at: i)
+			ifFalse: (dimnames at: i),'^',exponent asString.
+	]).
+	^ self magnitude asString,' ',dimstring.
+]
+
+{ #category : 'converting' }
 LinearUnit >> asUnit [
 	"Returns this unit as a unit."
 	"No-op, but other types support this message, so it's intended to be used on objects of potentially unknown type, to always return a unit."
@@ -101,6 +117,13 @@ LinearUnit >> magnitude: m [
 	"Sets the unit's magnitude."
 	| |
 	magnitude := m.
+]
+
+{ #category : 'printing' }
+LinearUnit >> printOn: stream [
+	"Prints the LinearUnit onto a stream by putting its string representation onto it."
+
+	stream nextPutAll: self asString.
 ]
 
 { #category : 'math functions' }

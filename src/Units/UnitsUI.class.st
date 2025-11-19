@@ -1,3 +1,6 @@
+"
+A UI for the Units package.
+"
 Class {
 	#name : 'UnitsUI',
 	#superclass : 'Object',
