@@ -90,7 +90,7 @@ LinearUnit >> asUnit [
 LinearUnit >> cubed [
 	"Returns the cube of this unit."
 
-	^ self pow: 3.
+	^ self raisedTo: 3.
 ]
 
 { #category : 'accessing' }
@@ -139,14 +139,14 @@ LinearUnit >> raisedTo: n [
 LinearUnit >> reciprocal [ 
 	"Returns this unit's reciprocal."
 
-	^ self pow: -1.
+	^ self raisedTo: -1.
 ]
 
 { #category : 'math functions' }
 LinearUnit >> squared [
 	"Returns the square of this unit."
 
-	^ self pow: 2.
+	^ self raisedTo: 2.
 ]
 
 { #category : 'accessing' }
