@@ -17,14 +17,24 @@ UnitDatabase class >> parseUnitfileLine: line [
 	"Accepts a unitfile-formatted line and splits it into an array of three parts: name, type, value."
 
 	| firstTab secondTab result |
-	firstTab := line indexOfAnyOf: '	'.
-	secondTab := line indexOfAnyOf: '	' startingAt: firstTab + 1.
+	firstTab := line indexOf: Character tab.
+	secondTab := line indexOf: Character tab startingAt: firstTab + 1.
 	
 	result := Array new: 3.
 	result at: 1 put: (line copyFrom: 1 to: firstTab - 1).
 	result at: 2 put: (line copyFrom: firstTab + 1 to: secondTab - 1).
 	result at: 3 put: (line copyFrom: secondTab + 1 to: line size).
 	^ result.
+]
+
+{ #category : 'parsing' }
+UnitDatabase class >> withoutComments: line [
+	"Returns the provided line with all unitfile comments and leading/trailing space removed."
+
+	| |
+	^ ((line includesSubstring: '#')
+		ifTrue: [ line copyFrom: 1 to: (line indexOfAnyOf: '#') - 1 ]
+		ifFalse: line) trim.
 ]
 
 { #category : 'adding' }
@@ -78,8 +88,7 @@ UnitDatabase >> defineUnit: name as: value [
 
 { #category : 'adding' }
 UnitDatabase >> evaluateUnitfileLine: line [
-	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"
+	"Evaluates one line of a unitfile."
 
 	| parts name type value |
 	parts := self class parseUnitfileLine: line.
