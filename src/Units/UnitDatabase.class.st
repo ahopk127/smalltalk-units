@@ -12,6 +12,21 @@ Class {
 	#package : 'Units'
 }
 
+{ #category : 'parsing' }
+UnitDatabase class >> parseUnitfileLine: line [
+	"Accepts a unitfile-formatted line and splits it into an array of three parts: name, type, value."
+
+	| firstTab secondTab result |
+	firstTab := line indexOfAnyOf: '	'.
+	secondTab := line indexOfAnyOf: '	' startingAt: firstTab + 1.
+	
+	result := Array new: 3.
+	result at: 1 put: (line copyFrom: 1 to: firstTab - 1).
+	result at: 2 put: (line copyFrom: firstTab + 1 to: secondTab - 1).
+	result at: 3 put: (line copyFrom: secondTab + 1 to: line size).
+	^ result.
+]
+
 { #category : 'adding' }
 UnitDatabase >> at: name putPrefixExpression: expression [
 	"Adds a prefix from its expression."
@@ -59,6 +74,23 @@ UnitDatabase >> defineUnit: name as: value [
 	"Add a new unit to this database."
 
 	self units at: name put: value.
+]
+
+{ #category : 'adding' }
+UnitDatabase >> evaluateUnitfileLine: line [
+	"comment stating purpose of instance-side method"
+	"scope: class-variables  &  instance-variables"
+
+	| parts name type value |
+	parts := self class parseUnitfileLine: line.
+	name := parts at: 1.
+	type := parts at: 2.
+	value := parts at: 3.
+	
+	type = 'base' ifTrue: [ self units at: name put: (LinearUnit base: value asInteger) ].
+	type = 'alias' ifTrue: [ self units at: name put: (self getUnit: value) ].
+	type = 'linear' ifTrue: [ self at: name putUnitExpression: value ].
+	type = 'prefix' ifTrue: [ self at: name putPrefixExpression: value ].
 ]
 
 { #category : 'accessing' }
