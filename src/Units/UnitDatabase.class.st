@@ -43,7 +43,7 @@ UnitDatabase >> at: name putPrefixExpression: expression [
 
 	| parsed |
 	parsed := self parsePrefixExpression: expression.
-	self units at: name put: parsed.
+	self prefixes at: name put: parsed.
 ]
 
 { #category : 'adding' }
@@ -87,6 +87,19 @@ UnitDatabase >> defineUnit: name as: value [
 ]
 
 { #category : 'adding' }
+UnitDatabase >> evaluateUnitfile: filepath [
+	"Evaluates all lines of the file at the provided filepath, ignoring comments and blank lines."
+
+	| fs |
+	fs := File openForReadFileNamed: filepath.
+	[ fs atEnd ] whileFalse: [ | line |
+			line := self class withoutComments: (fs upToAnyOf: #(10)) asString.
+			line isEmpty ifFalse: [ self evaluateUnitfileLine: line ].
+	].
+	fs close.
+]
+
+{ #category : 'adding' }
 UnitDatabase >> evaluateUnitfileLine: line [
 	"Evaluates one line of a unitfile."
 
@@ -96,7 +109,7 @@ UnitDatabase >> evaluateUnitfileLine: line [
 	type := parts at: 2.
 	value := parts at: 3.
 	
-	type = 'base' ifTrue: [ self units at: name put: (LinearUnit base: value asInteger) ].
+	type = 'base' ifTrue: [ self units at: name put: (LinearUnit base: (value asInteger + 1)) ].
 	type = 'alias' ifTrue: [ self units at: name put: (self getUnit: value) ].
 	type = 'linear' ifTrue: [ self at: name putUnitExpression: value ].
 	type = 'prefix' ifTrue: [ self at: name putPrefixExpression: value ].
