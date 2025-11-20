@@ -8,8 +8,9 @@ Class {
 		'magnitude',
 		'dimension'
 	],
-	#category : 'Units',
-	#package : 'Units'
+	#category : 'Units-Units',
+	#package : 'Units',
+	#tag : 'Units'
 }
 
 { #category : 'generate' }
@@ -60,6 +61,18 @@ LinearUnit >> adaptToNumber: num andSend: op [
 	"Performs an operation with a number."
 
 	^ num asUnit perform: op with: self.
+]
+
+{ #category : 'instance creation' }
+LinearUnit >> affine: zero [
+	"Returns an affine unit with this unit's magnitude and dimension and the provided zero."
+
+	| affine |
+	affine := AffineUnit new.
+	affine dimension: dimension;
+	       magnitude: magnitude;
+	       zero: zero.
+	^ affine.
 ]
 
 { #category : 'converting' }
