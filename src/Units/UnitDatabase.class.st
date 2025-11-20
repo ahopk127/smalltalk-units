@@ -112,6 +112,7 @@ UnitDatabase >> evaluateUnitfileLine: line [
 	type = 'base' ifTrue: [ self units at: name put: (LinearUnit base: (value asInteger + 1)) ].
 	type = 'alias' ifTrue: [ self units at: name put: (self getUnit: value) ].
 	type = 'linear' ifTrue: [ self at: name putUnitExpression: value ].
+	type = 'affine' ifTrue: [ self units at: name put: (self parseAffineLine: value) ].
 	type = 'prefix' ifTrue: [ self at: name putPrefixExpression: value ].
 ]
 
@@ -138,6 +139,17 @@ UnitDatabase >> getUnit: name [
 	].
 
 	^ nil.
+]
+
+{ #category : 'parsing' }
+UnitDatabase >> parseAffineLine: line [
+	"Accepts a tab-separated unit name and zero, and returns an affine unit created from them."
+
+	| firstTab base zero |
+	firstTab := line indexOf: Character tab.
+	base := self getUnit: (line copyFrom: 1 to: firstTab - 1).
+	zero := (line copyFrom: firstTab + 1 to: line size) asNumber.
+	^ base affine: zero.
 ]
 
 { #category : 'parsing' }
