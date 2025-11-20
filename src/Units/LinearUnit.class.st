@@ -86,6 +86,20 @@ LinearUnit >> asUnit [
 	^ self.
 ]
 
+{ #category : 'converting' }
+LinearUnit >> convertFromBase: value [
+	"Returns what value of this unit's base would be equal to in this unit."
+
+	^ value / magnitude.
+]
+
+{ #category : 'converting' }
+LinearUnit >> convertToBase: value [
+	"Returns value of this unit expressed in its base."
+
+	^ value * magnitude.
+]
+
 { #category : 'math functions' }
 LinearUnit >> cubed [
 	"Returns the cube of this unit."
@@ -151,10 +165,12 @@ LinearUnit >> squared [
 
 { #category : 'accessing' }
 LinearUnit >> to: unit [
-	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"
+	"Converts one of this unit into the resulting unit."
+	"e.g. (20 km) to: m = 20000."
+	"If the dimensions are incompatible (different), signals an IncompatibleDimensionError."
+	"For compatible linear units, this is equivalent to division."
 
 	|  |
 	dimension = unit dimension ifFalse: [IncompatibleDimensionsError new signal].
-	^ magnitude / unit magnitude.
+	^ unit convertFromBase: magnitude.
 ]

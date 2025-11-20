@@ -23,11 +23,12 @@ Number >> magnitude [
 
 { #category : '*Units' }
 Number >> of: unit [
-	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"
+	"Returns a LinearUnit equal to this number of this unit."
+	"e.g. 20 of: km -> 20 km."
+	"If the unit is linear, this is equivalent to multiplication."
 
 	| m2 |
-	m2 := unit magnitude * self.
+	m2 := unit convertToBase: self.
 	^ (LinearUnit new) dimension: unit dimension; magnitude: m2.
 ]
 
