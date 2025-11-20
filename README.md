@@ -11,10 +11,12 @@ This project is not officially associated with Smalltalk in any way.
 1. Copy the unitfile in this repository into your Pharo image.  
    The destination filepath should be `[PHARO_PATH]/images/[IMAGE]/unitfile`.
 2. Load this code into Pharo.
-3. Execute the code `UnitsUI convertExpressions.` in the Playground.
+3. Execute the code `UnitsUI convertUnits.` in the Playground.
 4. Enter the expressions you wish to convert from and to in the boxes.
 
 An output box should appear which shows you the conversion.
+
+To convert expressions instead of units (allows multiplication/division/powers, but doesn't support nonlinear units like Celsius/Fahrenheit), replace `convertUnits` in step 3 with `convertExpressions`.
 
 ## Expression Format
 
