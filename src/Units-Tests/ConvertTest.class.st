@@ -5,16 +5,17 @@ Class {
 	#package : 'Units-Tests'
 }
 
-{ #category : 'testing' }
-ConvertTest >> testConvert1 [
-	"comment stating purpose of instance-side method"
-	"scope: class-variables  &  instance-variables"
+{ #category : 'tests' }
+ConvertTest >> testConvertAffine [
+	"Tests that affine units convert properly."
 
-	| metre kilometre actual |
-	metre := LinearUnit base: 1.
-	kilometre := 1000.0 of: metre.
-	actual := (12345.0 of: metre) to: kilometre.
-	self assert: 12.345 equals: actual.
+	| kelvin celsius fahrenheit result |
+	kelvin := LinearUnit base: 5.
+	celsius := kelvin affine: 273.15.
+	fahrenheit := (kelvin / 1.8) affine: 459.67.
+	
+	result := 50.0 of: fahrenheit to: celsius.
+	self assert: 10.0 closeTo: result.
 ]
 
 { #category : 'testing' }
@@ -31,4 +32,15 @@ ConvertTest >> testConvertInvalid [
 			on: IncompatibleDimensionsError
 			do: [ :ex | errorThrown := true ].
 	self assert: errorThrown.
+]
+
+{ #category : 'testing' }
+ConvertTest >> testConvertLinear [
+	"Tests that you can convert units."
+
+	| metre kilometre actual |
+	metre := LinearUnit base: 2.
+	kilometre := 1000.0 of: metre.
+	actual := (12345.0 of: metre) to: kilometre.
+	self assert: 12.345 closeTo: actual.
 ]

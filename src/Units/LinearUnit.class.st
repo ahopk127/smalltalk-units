@@ -156,6 +156,8 @@ LinearUnit >> printOn: stream [
 { #category : 'math functions' }
 LinearUnit >> raisedTo: n [
 	"Raises this unit to the power n (must be a number)."
+	
+	n = 0 ifTrue: [ ^ 1.0 ]. "Need a special case so that I return a Number, not a LinearUnit."
 
 	^ (self class new) dimension: self dimension * n;
 	                   magnitude: (self magnitude raisedTo: n).
