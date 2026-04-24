@@ -12,6 +12,12 @@ Class {
 	#package : 'Units'
 }
 
+{ #category : 'instance creation' }
+UnitDatabase class >> default [
+	"Constructs and returns a UnitDatabase from the default unitfile."
+	^self new evaluateUnitfile: 'unitfile'; yourself.
+]
+
 { #category : 'parsing' }
 UnitDatabase class >> parseUnitfileLine: line [
 	"Accepts a unitfile-formatted line and splits it into an array of three parts: name, type, value."
