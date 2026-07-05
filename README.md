@@ -6,6 +6,17 @@ This was designed after [my Zig unit converter](https://github.com/ahopk127/zig-
 
 This project is not officially associated with Smalltalk in any way.
 
+## Metacello Installation
+
+```smalltalk
+Metacello new
+	githubUser: 'ahopk127' project: 'smalltalk-units' commitish: 'main' path: 'src';
+	baseline: 'Units';
+	load
+```
+
+Metacello doesn't copy the unitsfile, so you will need to follow the instructions below to use the preset units.
+
 ## Execution
 
 1. Copy the unitfile in this repository into your Pharo image.  
